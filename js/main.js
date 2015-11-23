@@ -45,7 +45,7 @@ var userDataBuilder = function(user) {
 		"gh_username": "https://github.com/%org%",
 		"gh_followers":"https://github.com/%org%/followers",
 		"gh_following":"https://github.com/%org%/following",
-		"gh_repositories": "https://github.com/%org%"
+		"gh_repositories": "https://github.com/%org%?tab=repositories"
 	}
 	for(var d in links) {
 		var t = links[d];
@@ -127,7 +127,7 @@ jQuery.fn.buildRepoTree = function() {
 	fetchOrg(org, "repos", function(data) {
 		for(var repo in data) {
 			fetchCommits(org, data[repo], function(e, d, r) {
-				dataDOMBuilder(repoDataBuilder(r, e[0]), target, "#repo-template", r.name);
+				dataDOMBuilder(repoDataBuilder(r, e[0]), target, "#repo-template", "repo-"+r.name);
 			});
 		}
 		target.removeClass("not_rendered");
@@ -141,7 +141,7 @@ jQuery.fn.buildUserTree = function() {
 	fetchOrg(org, "members", function(data) {
 		for(var user in data) {
 			fetchUserdata(data[user].login, function(data) {
-				dataDOMBuilder(userDataBuilder(data), target, "#user-template", data.id);
+				dataDOMBuilder(userDataBuilder(data), target, "#user-template", "user-"+data.login);
 			});
 		}
 		target.removeClass("not_rendered");
