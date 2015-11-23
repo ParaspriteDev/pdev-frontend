@@ -55,7 +55,6 @@ var userDataBuilder = function(user) {
 }
 
 var repoDataBuilder = function(repo, comm) {
-	console.log(comm);
 	var data = {
 		"repo_title": "name",
 		"repo_desc": "description",
