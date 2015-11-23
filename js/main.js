@@ -1,7 +1,11 @@
 var githubAPI = "https://api.github.com/";
 
-var fetchOrgRepos = function(org, callback) {
-	jQuery.getJSON(githubAPI+"orgs/"+org+"/repos", callback);
+var fetchOrg = function(org, clause, callback) {
+	jQuery.getJSON(githubAPI+"orgs/"+org+"/"+clause, callback);
+}
+
+var fetchUserdata = function(username, callback) {
+	jQuery.getJSON(githubAPI+"users/"+username, callback);
 }
 
 var fetchCommits = function(org, repo, callback) {
@@ -18,8 +22,36 @@ String.prototype.replaceData = function(repo, org) {
 	return this.replace(/\%repo\%/g, repo).replace(/\%org\%/g, org);
 }
 
-var notNull = function(data) {
-	return (data == null ? "None" : data);
+var notNull = function(data, rep) {
+	return (data == null ? rep : data);
+}
+
+var userDataBuilder = function(user) {
+	var data = {
+		"gh_username": "login",
+		"gh_name": "name",
+		"gh_location":"location",
+		"gh_followers":"followers",
+		"gh_following":"following",
+		"gh_repositories": "public_repos"
+	}
+	for(var d in data) {
+		var t = data[d];
+		if(t in user) {
+			data[d] = notNull(user[t], "Unknown");
+		}
+	}
+	var links = {
+		"gh_username": "https://github.com/%org%",
+		"gh_followers":"https://github.com/%org%/followers",
+		"gh_following":"https://github.com/%org%/following",
+		"gh_repositories": "https://github.com/%org%"
+	}
+	for(var d in links) {
+		var t = links[d];
+		links[d] = t.replaceData("", user.login);
+	}
+	return {"data":data, "links":links, "imag": {"gh_avatar": user.avatar_url}}
 }
 
 var repoDataBuilder = function(repo, comm) {
@@ -35,7 +67,7 @@ var repoDataBuilder = function(repo, comm) {
 	for(var d in data) {
 		var t = data[d];
 		if(t in repo) {
-			data[d] = notNull(repo[t]);
+			data[d] = notNull(repo[t], "None");
 		}
 	}
 	var links = {
@@ -58,35 +90,59 @@ var repoDataBuilder = function(repo, comm) {
 	links["n-commit"] = comm.html_url;
 	links["u-commit"] = comm.committer.html_url;
 
-	return {"data": data, "links": links};
+	return {"data": data, "links": links, "imag": null};
 }
 
-var repoDOMDump = function(element, data) {
-	for(var d in data.data) {
-		var point = data.data[d];
-		element.find("."+d).text(point);
-	}
-	for(var l in data.links) {
-		var point = data.links[l];
-		element.find("."+l).attr("href", point);
-	}
-}
 
-var repoDOMBuilder = function(data, tag) {
-	var newInstance = $("#repo-template").clone()
-					  .attr("id", data.data.repo_title)
+var dataDOMBuilder = function(data, tag, template, name) {
+	var newInstance = $(template).clone()
+					  .attr("id", name)
 					  .fadeIn("fast")
 					  .appendTo(tag);
-	repoDOMDump(newInstance, data);
+
+	if(data["data"] != null) {
+		for(var d in data.data) {
+			var point = data.data[d];
+			newInstance.find("."+d).text(point);
+		}
+	}
+
+	if(data["links"] != null) {
+		for(var l in data.links) {
+			var point = data.links[l];
+			newInstance.find("."+l).attr("href", point);
+		}
+	}
+
+	if(data["imag"] != null) {
+		for(var l in data.imag) {
+			var point = data.imag[l];
+			newInstance.find("."+l).attr("src", point);
+		}
+	}
 }
 
 jQuery.fn.buildRepoTree = function() {
 	var target = $(this);
 	var org = target.data("gitlist");
-	fetchOrgRepos(org, function(data) {
+	fetchOrg(org, "repos", function(data) {
 		for(var repo in data) {
 			fetchCommits(org, data[repo], function(e, d, r) {
-				repoDOMBuilder(repoDataBuilder(r, e[0]), target);
+				dataDOMBuilder(repoDataBuilder(r, e[0]), target, "#repo-template", r.name);
+			});
+		}
+		target.removeClass("not_rendered");
+		target.addClass("rendered");
+	});
+}
+
+jQuery.fn.buildUserTree = function() {
+	var target = $(this);
+	var org = target.data("gitlist");
+	fetchOrg(org, "members", function(data) {
+		for(var user in data) {
+			fetchUserdata(data[user].login, function(data) {
+				dataDOMBuilder(userDataBuilder(data), target, "#user-template", data.id);
 			});
 		}
 		target.removeClass("not_rendered");

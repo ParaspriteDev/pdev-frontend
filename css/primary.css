@@ -171,3 +171,28 @@ a.after_nb.repo_num_count {
     color: #FF9800;
     text-decoration: none;
 }
+.github_user{
+    height: 160px;
+    margin-bottom: 10px;
+    position: relative;
+}
+.github_user img{
+    height: 100%;
+}
+.gh_userdata{
+    display: inline-block;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    left: 170px;
+}
+.gh_username{
+    color: #FF9800;
+    font-size: 25px;
+    font-weight: bolder;
+}
+.gh_stats{
+    position: absolute;
+    top: 0;
+    right: 0;
+}

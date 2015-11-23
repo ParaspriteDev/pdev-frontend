@@ -37,7 +37,9 @@
 				<div class="repo_list_loader">Loading repositories...</div>
 			</div>
 			<h2>The People</h2>
-			<div class="not_rendered github_list_members" data-gitlist="ParaspriteDev" id="gitlist-members"></div>
+			<div class="not_rendered github_list_members" data-gitlist="ParaspriteDev" id="gitlist-members">
+				<div class="repo_list_loader">Loading Users...</div>
+			</div>
 		</div>
 		<footer>
 			<span class="maincredit">&copy; 2015 Parasprite Dev Team</span>
@@ -46,6 +48,7 @@
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$("#gitlist-primary").buildRepoTree();
+				$("#gitlist-members").buildUserTree();
 			});
 		</script>
 	</body>
@@ -68,5 +71,19 @@
 		<span class="repo_last_commit"><a href="" target="_blank" class="n-commit"></a> &mdash; 
 			<span class="repo_commiter"><a href="" target="_blank" class="u-commit"></a> committed <span class="t-commit"></span></span>
 		</span>
+	</div>
+
+	<div class="github_user" id="user-template" style="display:none;">
+		<img src="https://avatars.githubusercontent.com/u/6363179?v=3" alt="gituser" class="gh_avatar">
+		<div class="gh_userdata">
+			<a class="gh_username" href="https://github.com/LunaSquee" target="_blank">LunaSquee</a><br>
+			<span class="gh_name">Evert</span><br>
+			<i class="fa fa-map-marker fa-fw"></i><span class="gh_location">Estonia</span>
+			<div class="gh_stats">
+				<i class="fa fa-users fa-fw"></i><a href="https://github.com/LunaSquee/followers" class="gh_followers">11</a> 
+				<i class="fa fa-user-plus fa-fw"></i><a href="https://github.com/LunaSquee/following" class="gh_following">5</a> 
+				<i class="fa fa-book fa-fw"></i><a href="https://github.com/LunaSquee" class="gh_repositories">5</a>
+			</div>
+		</div>
 	</div>
 </html>
