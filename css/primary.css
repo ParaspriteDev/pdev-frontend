@@ -1,4 +1,90 @@
 body{
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
+    font-family: Open Sans, Everson Mono, Helvetica;
+    background-color: #0A0A0A;
+    color: #FF9800;
+}
+h1,h2,h3,h4,h5{
+    margin-top: 0;
+}
+.headblock{
+    height: 140px;
+    text-align: center;
+}
+.maintitle{
+    display: block;
+    font-size: 80px;
+}
+.navgb{
+    background-color: #2D2D2D;
+    margin-top: 20px;
+    height: 40px;
+}
+.navgb ul{
+    list-style-type: none;
+    margin: 0 150px;
+    padding: 0;
+    height: 100%;
+    text-align: center;
+}
+.navgb ul li {
+    display: inline-block;
+    height: 40px;
+}
+.navgb a {
+    font-size: 20px;
+    line-height: 2;
+    height: 40px;
+    padding: 0 15px;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    -webkit-transition: background-color linear 0.1s,color linear 0.1s;
+    -moz-transition: background-color linear 0.1s,color linear 0.1s;
+    -ms-transition: background-color linear 0.1s,color linear 0.1s;
+    -o-transition: background-color linear 0.1s,color linear 0.1s;
+    transition: background-color linear 0.1s,color linear 0.1s;
+}
+.navgb a:hover, .navgb a.active{
+    background-color: #404040;
+    color: #FF9800;
+}
+.nav_e{
+    position: relative;
+}
+.nav_e ul{
+    display: none;
+    width: 200px;
+}
+.nav_e li{
+    width: 100%;
+}
+.nav_e a{
+    background-color: #2D2D2D;
+    width: 100%;
+}
+.nav_e:hover > ul {
+    display: block;
+    position: absolute;
+    left: -150px;
+}
+.maincon{
+    width: 1200px;
+    margin: 0 auto;
+    background-color: #212121;
+    min-height: 600px;
+    padding: 10px;
+}
+footer{
+    width: 1200px;
+    margin: 0 auto;
+    background-color: #212121;
+    text-align: center;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+footer span{
+    display: block;
 }
