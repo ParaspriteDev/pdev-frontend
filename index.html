@@ -49,6 +49,14 @@
 			$(document).ready(function() {
 				$("#gitlist-primary").buildRepoTree();
 				$("#gitlist-members").buildUserTree();
+
+				var $window = $(window),
+				$stickyEl = $('.navgb'),
+				elTop = $stickyEl.offset().top;
+
+				$window.scroll(function() {
+					$stickyEl.toggleClass('sticky', $window.scrollTop() > elTop);
+				});
 			});
 		</script>
 	</body>

@@ -28,6 +28,14 @@ a:hover{
     margin-top: 20px;
     height: 40px;
 }
+.navgb.sticky{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    margin-top: 0;
+}
 .navgb ul{
     list-style-type: none;
     margin: 0 150px;
