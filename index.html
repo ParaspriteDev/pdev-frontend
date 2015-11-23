@@ -33,7 +33,9 @@
 			<h1>Welcome to the Parasprite Dev Team homepage!</h1>
 			<p>This section is still under construction</p>
 			<h2>Our Projects</h2>
-			<div class="not_rendered github_list" data-gitlist="ParaspriteDev" id="gitlist-primary"></div>
+			<div class="not_rendered github_list" data-gitlist="ParaspriteDev" id="gitlist-primary">
+				<div class="repo_list_loader">Loading repositories...</div>
+			</div>
 			<h2>The People</h2>
 			<div class="not_rendered github_list_members" data-gitlist="ParaspriteDev" id="gitlist-members"></div>
 		</div>
@@ -41,5 +43,30 @@
 			<span class="maincredit">&copy; 2015 Parasprite Dev Team</span>
 			<span class="subcredit">Designed by <a href="/" target="_blank">LunaSquee</a></span>
 		</footer>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#gitlist-primary").buildRepoTree();
+			});
+		</script>
 	</body>
+	<!-- Templates -->
+	<div class="git_repository" id="repo-template" style="display:none;">
+		<a class="repo_title" href="https://github.com/ParaspriteDev/Pon3Gine" target="_blank">Pon3Gine</a>
+		<span class="repo_desc">nothing to see here yet</span>
+		<span class="repo_lang">None</span>
+		<div class="repo_actions">
+			<a href="https://github.com/ParaspriteDev/Pon3Gine/subscription" class="nicebutton b-watch" target="_blank">
+			<i class="fa fa-eye fa-fw"></i>&nbsp;Watch</a>
+			<a class="after_nb repo_num_count r-watch" href="https://github.com/ParaspriteDev/Pon3Gine/watchers" target="_blank">5</a>
+			<a href="https://github.com/ParaspriteDev/Pon3Gine/stargazers" class="nicebutton b-star" target="_blank">
+			<i class="fa fa-star fa-fw"></i>&nbsp;Star</a>
+			<a class="after_nb repo_num_count r-star" href="https://github.com/ParaspriteDev/Pon3Gine/stargazers" target="_blank">0</a>
+			<a href="https://github.com/ParaspriteDev/Pon3Gine#fork-destination-box" class="nicebutton b-fork" target="_blank">
+			<i class="fa fa-code-fork fa-fw"></i>&nbsp;Fork</a>
+			<a class="after_nb repo_num_count r-fork" href="https://github.com/ParaspriteDev/Pon3Gine/network" target="_blank">0</a>
+		</div>
+		<span class="repo_last_commit"><a href="" target="_blank" class="n-commit"></a> &mdash; 
+			<span class="repo_commiter"><a href="" target="_blank" class="u-commit"></a> committed <span class="t-commit"></span></span>
+		</span>
+	</div>
 </html>

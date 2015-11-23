@@ -8,6 +8,13 @@ body{
 h1,h2,h3,h4,h5{
     margin-top: 0;
 }
+a{
+    color: #fff;
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
 .headblock{
     height: 140px;
     text-align: center;
@@ -87,4 +94,80 @@ footer{
 }
 footer span{
     display: block;
+}
+div.not_rendered .repo_list_loader{
+    display: block;
+    text-align: center;
+}
+div.rendered .repo_list_loader{
+    display: none;
+}
+.git_repository{
+    height: 120px;
+    position: relative;
+    background-color: #292929;
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px #333;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.repo_desc{
+    display: block;
+    font-size: 25px;
+}
+.repo_title{
+    color: #03A9F4;
+    font-size: 32px;
+    text-decoration: none;
+    font-weight: bolder;
+}
+.repo_lang{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+}
+.repo_actions{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+a.nicebutton {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+    background: #3a3a3a;
+    background: -moz-linear-gradient(top, #3a3a3a 0%, #1c1c1c 100%);
+    background: -webkit-linear-gradient(top, #3a3a3a 0%,#1c1c1c 100%);
+    background: linear-gradient(to bottom, #3a3a3a 0%,#1c1c1c 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#1c1c1c',GradientType=0 );
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border: 1px solid #1B1B1B;
+    box-shadow: inset 1px 1px 2px #505050;
+    margin-left: 10px;
+}
+a.after_nb.repo_num_count {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+    background-color: #1C1C1C;
+    position: relative;
+    left: -5px;
+    border: 1px solid #1B1B1B;
+    width: 15px;
+    display: inline-block;
+    text-align: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.repo_last_commit{
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 10px;
+}
+.repo_last_commit a{
+    color: #FF9800;
+    text-decoration: none;
 }
