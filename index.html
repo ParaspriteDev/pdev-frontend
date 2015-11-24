@@ -52,10 +52,12 @@
 
 				var $window = $(window),
 				$stickyEl = $('.navgb'),
+				$mainCon = $('.maincon'),
 				elTop = $stickyEl.offset().top;
 
 				$window.scroll(function() {
 					$stickyEl.toggleClass('sticky', $window.scrollTop() > elTop);
+					$mainCon.toggleClass('upperfill', $window.scrollTop() > elTop);
 				});
 			});
 		</script>
