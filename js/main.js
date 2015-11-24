@@ -121,17 +121,21 @@ var dataDOMBuilder = function(data, tag, template, name) {
 	}
 }
 
+var sortUpdated = function(a, b) {
+	return (new Date(b.updated_at).getTime() / 1000) - (new Date(a.updated_at).getTime() / 1000);
+}
+
 jQuery.fn.buildRepoTree = function() {
 	var target = $(this);
 	var org = target.data("gitlist");
 	fetchOrg(org, "repos", function(data) {
+		data.sort(sortUpdated);
 		for(var repo in data) {
 			fetchCommits(org, data[repo], function(e, d, r) {
 				dataDOMBuilder(repoDataBuilder(r, e[0]), target, "#repo-template", "repo-"+r.name);
 			});
 		}
-		target.removeClass("not_rendered");
-		target.addClass("rendered");
+		target.toggleClass("not_rendered rendered");
 	});
 }
 
@@ -144,7 +148,6 @@ jQuery.fn.buildUserTree = function() {
 				dataDOMBuilder(userDataBuilder(data), target, "#user-template", "user-"+data.login);
 			});
 		}
-		target.removeClass("not_rendered");
-		target.addClass("rendered");
+		target.toggleClass("not_rendered rendered");
 	});
 }
