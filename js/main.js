@@ -14,8 +14,36 @@ var fetchCommits = function(org, repo, callback) {
 	});
 }
 
-var parseTimeAgo = function(stamp) {
-	return new Date(stamp);
+var parseTimeAgo = function(date, includeAgo) {
+	var seconds = Math.floor((new Date() - date) / 1000);
+
+	var interval = Math.floor(seconds / 31536000);
+
+	if (interval > 1) {
+		return interval + " years" + (includeAgo != null ? " ago" : "");
+	}
+
+	interval = Math.floor(seconds / 2592000);
+	if (interval > 1) {
+		return interval + " months" + (includeAgo != null ? " ago" : "");
+	}
+	
+	interval = Math.floor(seconds / 86400);
+	if (interval > 1) {
+		return interval + " days" + (includeAgo != null ? " ago" : "");
+	}
+	
+	interval = Math.floor(seconds / 3600);
+	if (interval > 1) {
+		return interval + " hours" + (includeAgo != null ? " ago" : "");
+	}
+	
+	interval = Math.floor(seconds / 60);
+	if (interval > 1) {
+		return interval + " minutes" + (includeAgo != null ? " ago" : "");
+	}
+	
+	return Math.floor(seconds) + " seconds";
 }
 
 String.prototype.replaceData = function(repo, org) {
@@ -35,22 +63,26 @@ var userDataBuilder = function(user) {
 		"gh_following":"following",
 		"gh_repositories": "public_repos"
 	}
+	
 	for(var d in data) {
 		var t = data[d];
 		if(t in user) {
 			data[d] = notNull(user[t], "Unknown");
 		}
 	}
+
 	var links = {
 		"gh_username": "https://github.com/%org%",
 		"gh_followers":"https://github.com/%org%/followers",
 		"gh_following":"https://github.com/%org%/following",
 		"gh_repositories": "https://github.com/%org%?tab=repositories"
 	}
+
 	for(var d in links) {
 		var t = links[d];
 		links[d] = t.replaceData("", user.login);
 	}
+
 	return {"data":data, "links":links, "imag": {"gh_avatar": user.avatar_url}}
 }
 
@@ -63,12 +95,14 @@ var repoDataBuilder = function(repo, comm) {
 		"r-watch": "watchers_count",
 		"r-fork": "forks_count"
 	}
+
 	for(var d in data) {
 		var t = data[d];
 		if(t in repo) {
 			data[d] = notNull(repo[t], "None");
 		}
 	}
+
 	var links = {
 		"repo_title": "https://github.com/%org%/%repo%/",
 		"b-watch": "https://github.com/%org%/%repo%/subscription",
@@ -78,13 +112,14 @@ var repoDataBuilder = function(repo, comm) {
 		"b-fork": "https://github.com/%org%/%repo%#fork-destination-box",
 		"r-fork": "https://github.com/%org%/%repo%/network"
 	}
+
 	for(var d in links) {
 		var t = links[d];
 		links[d] = t.replaceData(repo.name, repo.owner.login);
 	}
 
 	data["n-commit"] = comm.commit.message;
-	data["t-commit"] = parseTimeAgo(comm.commit.committer.date);
+	data["t-commit"] = parseTimeAgo(new Date(comm.commit.committer.date), true);
 	data["u-commit"] = comm.author.login;
 	links["n-commit"] = comm.html_url;
 	links["u-commit"] = comm.committer.html_url;
@@ -92,12 +127,9 @@ var repoDataBuilder = function(repo, comm) {
 	return {"data": data, "links": links, "imag": null};
 }
 
-
+// Templating
 var dataDOMBuilder = function(data, tag, template, name) {
-	var newInstance = $(template).clone()
-					  .attr("id", name)
-					  .fadeIn("fast")
-					  .appendTo(tag);
+	var newInstance = $(template).clone().attr("id", name).fadeIn("fast").appendTo(tag);
 
 	if(data["data"] != null) {
 		for(var d in data.data) {
