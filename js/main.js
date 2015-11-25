@@ -43,7 +43,7 @@ var parseTimeAgo = function(date, includeAgo) {
 		return interval + " minutes" + (includeAgo != null ? " ago" : "");
 	}
 	
-	return Math.floor(seconds) + " seconds";
+	return Math.floor(seconds) + " seconds" + (includeAgo != null ? " ago" : "");
 }
 
 String.prototype.replaceData = function(repo, org) {
@@ -63,7 +63,7 @@ var userDataBuilder = function(user) {
 		"gh_following":"following",
 		"gh_repositories": "public_repos"
 	}
-	
+
 	for(var d in data) {
 		var t = data[d];
 		if(t in user) {
